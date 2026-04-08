@@ -1591,28 +1591,42 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 (768px 이하 / 7개 메뉴 + 검색창 통합)
+   📱 모바일 전용 최적화 (768px 이하 / 3열 그리드 완벽 고정)
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 네비게이션: 메뉴와 검색창이 같은 그리드 안에서 놀도록 설정 */
+  /* 1. 네비게이션: 부모 컨테이너 정렬 */
+  .title { 
+    flex-direction: column !important; 
+    padding: 10px !important; 
+    height: auto !important;
+  }
+  
+  .logo { width: 100px !important; margin: 0 auto 5px !important; }
+
   .nav-row {
-    display: grid !important; /* flex에서 grid로 변경 */
-    grid-template-columns: repeat(3, 1fr) !important; /* 전체를 3열로 인식 */
-    gap: 10px !important;
+    display: block !important; /* 내부 요소 배치를 위해 블록화 */
+    width: 100% !important;
     padding: 0 15px !important;
   }
 
-  /* .menu를 그리드 시스템의 일부로 사용 (7개 메뉴 나열) */
+  /* 2. 메뉴 그리드: 3열 강제 유지 */
   .menu {
-    display: contents !important; /* ⭐ 핵심: 자식 리스트 아이템들이 부모 그리드(nav-row)에 직접 배치되게 함 */
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* ⭐ 한 줄에 3개 강제 */
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
   }
 
   .menu-item {
     display: block !important;
+    width: 100% !important;
   }
 
-  /* 메뉴 버튼 스타일 균일화 & 글자 깨짐 방지 */
+  /* 메뉴 버튼 스타일 및 글자 깨짐 방지 */
   .menu-item > a {
     display: flex !important;
     align-items: center;
@@ -1620,7 +1634,6 @@ mark.key {
     height: 48px !important;
     font-size: clamp(0.7rem, 2.5vw, 0.82rem) !important;
     line-height: 1.1 !important;
-    letter-spacing: -0.03em !important;
     font-weight: 700;
     word-break: keep-all !important;
     text-align: center;
@@ -1632,58 +1645,51 @@ mark.key {
     overflow: hidden;
   }
 
-  /* 2. 검색창 배치: 8~9번 칸 차지 (2칸 너비) */
+  /* 3. 검색창: 7번 메뉴(고객지원) 옆 빈자리로 강제 이동 */
   .nav-search {
+    /* 부모 그리드 밖에서도 7번 메뉴 옆에 붙게 만드는 마법의 설정 */
     display: flex !important;
     align-items: center;
     
-    /* 3열 그리드에서 7번 메뉴(고객지원) 옆의 2칸을 차지 */
-    grid-column: span 2 !important; 
+    position: relative !important;
+    float: right; /* 오른쪽으로 붙임 */
     
+    /* 3열 중 2칸 너비 계산: (100% / 3 * 2) + 여백조절 */
+    width: calc(66.6% + 4px) !important; 
     height: 48px !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 !important; /* 마진 오차 제거 */
+    
+    /* 7번 메뉴 바로 옆으로 끌어올리기 */
+    margin-top: -58px !important; 
+    margin-bottom: 20px !important;
     
     background: #fff !important;
     border: 1px solid var(--brand) !important;
     border-radius: 8px !important;
     padding: 0 10px !important;
-    box-shadow: none !important;
+    z-index: 50;
   }
 
   .nav-search input[type="search"] {
     width: 100% !important;
-    height: 100% !important;
-    font-size: 14px !important;
     border: none !important;
     outline: none !important;
+    font-size: 14px !important;
+    background: transparent !important;
   }
 
-  /* 3. 배너: 텍스트 제거 및 높이 슬림화 */
+  /* 4. 배너 및 미디어 섹션 (기존 요청 반영) */
   .main-banner .banner-text { display: none !important; }
-  .main-banner { 
-    height: 160px !important; 
-    margin: 0 10px 20px !important; 
-    border-radius: 12px !important;
-  }
+  .main-banner { height: 160px !important; }
 
-  /* 4. 미디어 섹션: 가독성 비율 최적화 (0.55 : 1.45) */
   .media-row {
-    grid-template-columns: 0.55fr 1.45fr !important; 
+    display: grid !important;
+    grid-template-columns: 0.6fr 1.4fr !important; /* 가독성 위해 텍스트 비중 확대 */
     gap: 12px !important;
     padding: 0 10px !important;
     align-items: start !important;
   }
-  .copy h3 { font-size: 1rem !important; margin-bottom: 5px !important; }
+  .copy h3 { font-size: 1rem !important; margin-bottom: 4px !important; }
   .copy p { font-size: 0.82rem !important; line-height: 1.5 !important; word-break: keep-all; }
 
-  /* 5. 로고 및 레이아웃 정리 */
-  .logo { width: 100px !important; margin: 0 auto 5px !important; }
-  .title { 
-    flex-direction: column !important; 
-    padding: 10px !important; 
-    height: auto !important;
-  }
   .intro-cards { grid-template-columns: 1fr !important; }
 }
