@@ -1584,44 +1584,43 @@ mark.key {
   transform: translateY(0);
 }
 
+/* ============================================================
+   📱 모바일 최종 해결 (768px 이하 / 수평 및 너비 완벽 교정)
+   ============================================================ */
 @media screen and (max-width: 768px) {
 
   /* 1. 헤더 로고 중앙 정렬 */
-  .title { 
+  body .title { 
     display: flex !important;
     flex-direction: column !important; 
     align-items: center !important;
     padding: 10px 0 !important;
     height: auto !important;
   }
-  .logo { width: 100px !important; margin-bottom: 10px !important; }
+  body .logo { width: 100px !important; margin-bottom: 10px !important; }
 
-  /* 2. 네비게이션 컨테이너 */
-  .nav-row {
+  /* 2. 네비게이션 컨테이너: 높이 자동 확보 */
+  body .nav-row {
     display: block !important;
     position: relative !important;
     width: 100% !important;
     padding: 0 15px !important;
-    /* 메뉴 3줄(48px*3) + 간격(10px*2) + 하단여백 */
-    min-height: 180px !important; 
+    min-height: 185px !important; /* 검색창 영역까지 공간 강제 확보 */
   }
 
-  /* 3. 메뉴 그리드: 3열 강제 유지 */
-  .menu {
+  /* 3. 메뉴 그리드: 3열 강제 고정 */
+  body .menu {
     display: grid !important;
-    grid-template-columns: repeat(3, 33.33%) !important; /* 비율 정밀화 */
-    column-gap: 10px !important;
-    row-gap: 10px !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
   }
 
-  .menu-item { display: block !important; }
-
   /* 메뉴 버튼 디자인 */
-  .menu-item > a {
+  body .menu-item > a {
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -1634,20 +1633,21 @@ mark.key {
     border-radius: 8px;
     color: #334155;
     text-align: center;
+    box-sizing: border-box !important;
   }
 
-  /* ⭐ 4. 검색창: 7번 메뉴와 수평을 칼같이 맞추는 정밀 좌표 */
-  .nav-search {
+  /* ⭐ 4. 검색창: 절대 좌표 정밀 타격 (7번 메뉴 옆 고정) */
+  body .nav-search {
     display: flex !important;
     align-items: center;
     
-    /* 절대 위치: 위에서부터 3번째 줄 시작점(48*2 + 10*2)으로 고정 */
+    /* 3번째 줄(48px*2 + 10px*2 = 116px) 높이에 딱 붙이기 */
     position: absolute !important;
     top: 116px !important; 
     right: 15px !important; 
     
-    /* 너비: 전체 너비의 약 66%에서 간격 제외 */
-    width: calc(66.66% - 17px) !important; 
+    /* 너비: 3개 열 중 2개 열의 폭을 계산하여 정밀 할당 */
+    width: calc(66.6% - 15px) !important; 
     height: 48px !important;
     
     background: #ffffff !important;
@@ -1655,23 +1655,22 @@ mark.key {
     border-radius: 8px !important;
     padding: 0 10px !important;
     margin: 0 !important;
-    z-index: 100;
+    z-index: 1000 !important; /* 다른 요소보다 무조건 위로 */
   }
 
-  .nav-search input[type="search"] {
+  body .nav-search input[type="search"] {
     flex: 1;
     width: 100% !important;
     border: none !important;
     outline: none !important;
     font-size: 14px !important;
     background: transparent !important;
+    appearance: none;
   }
 
-  /* 5. 기타 섹션 최적화 */
-  .main-banner .banner-text { display: none !important; }
-  .main-banner { height: 160px !important; margin: 25px 15px !important; border-radius: 12px !important; }
-  .media-row { grid-template-columns: 0.6fr 1.4fr !important; gap: 12px !important; padding: 0 10px !important; }
-  .copy h3 { font-size: 1rem !important; }
-  .copy p { font-size: 0.82rem !important; line-height: 1.5 !important; }
-  .intro-cards { grid-template-columns: 1fr !important; }
+  /* 5. 배너 및 기타 섹션 */
+  body .main-banner .banner-text { display: none !important; }
+  body .main-banner { height: 160px !important; margin: 25px 15px !important; border-radius: 12px !important; }
+  body .media-row { grid-template-columns: 0.6fr 1.4fr !important; gap: 12px !important; }
+  body .intro-cards { grid-template-columns: 1fr !important; }
 }
