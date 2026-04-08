@@ -1635,29 +1635,29 @@ mark.key {
     box-sizing: border-box !important;
   }
 
-  /* ⭐ 4. 검색창: 상단 버튼 라인에 맞춰 오른쪽 끝선 강제 고정 */
+/* 3. 검색창: 양단 여백 확보 및 겹침 해결 최종본 */
   .nav-search {
     display: flex !important;
     align-items: center;
-    box-sizing: border-box !important; 
-
-    /* 핵심: 너비 계산 대신 '오른쪽 좌표'를 직접 지정하여 끝선 일치 */
-    position: absolute !important;
-    right: 15px !important; /* 부모(.nav-row)의 패딩 15px과 일치시켜 상단 버튼 끝선과 맞춤 */
     
-    /* 너비: 전체 폭에서 메뉴 1칸과 간격을 뺀 나머지 (상단 2~3열 영역) */
-    width: calc((100% - 30px) * 0.666 + 5px) !important; 
+    /* ⭐ 핵심: 너비를 66.6%보다 줄여서 여백 확보 */
+    width: calc(66.6% - 16px) !important; 
     max-width: none !important;
     
-    /* 수평 위치: 메뉴 가장 아랫줄(7번 옆)에 배치 */
-    bottom: 0 !important; 
-    margin: 0 !important;
+    /* ⭐ 위치 조정: 왼쪽 버튼(고객지원)과 겹치지 않게 오른쪽으로 밀기 */
+    align-self: flex-end !important;
+    margin-right: 4px !important;    /* 오른쪽 끝 여백 */
+    margin-left: auto !important;    /* 왼쪽 공간을 최대로 밀어 겹침 방지 */
+    
+    /* 수평 및 간격 유지 */
+    margin-top: -58px !important;   /* 고객지원 버튼과 수평 맞춤 */
+    margin-bottom: 15px !important;
     
     height: 48px !important;
     background: #ffffff !important;
     border: 1.5px solid #2563eb !important;
     border-radius: 8px !important;
-    padding: 0 12px !important;
+    padding: 0 10px !important;
     z-index: 10;
   }
 
