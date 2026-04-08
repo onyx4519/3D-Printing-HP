@@ -1591,81 +1591,88 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 (768px 이하 / 메뉴 크기 균일화)
+   📱 모바일 전용 최적화 (768px 이하 / 메뉴+검색창 통합 배치)
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 메뉴: 3열 격자 배치 및 크기 균일화 */
+  /* 1. 네비게이션 레이아웃: 메뉴와 검색창을 하나의 그리드로 통합 */
+  .nav-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 0 15px !important;
+  }
+
+  /* 메뉴 그리드 설정 (3열) */
   .menu {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important; /* 3등분 강제 */
-    gap: 10px !important; /* 버튼 사이 간격 */
-    width: calc(100% - 30px) !important;
-    margin: 0 auto 15px !important;
+    grid-template-columns: repeat(3, 1fr) !important; 
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 !important;
     padding: 0 !important;
   }
 
-  .menu-item {
-    width: 100% !important; /* 부모 그리드 너비에 맞춤 */
-  }
-
+  /* 7번째 메뉴(고객지원) 스타일 유지 */
   .menu-item > a {
-    display: flex !important;           /* 플렉스 박스로 변경 */
-    align-items: center;                /* 세로 중앙 정렬 */
-    justify-content: center;            /* 가로 중앙 정렬 */
-    
-    /* ⭐ 핵심: 높이와 폰트 설정 */
-    height: 48px !important;            /* 모든 버튼의 높이를 고정 (균일화) */
-    font-size: 0.82rem !important;      /* 글자가 긴 메뉴를 고려한 크기 */
-    padding: 0 4px !important;          /* 좌우 여백 최소화 */
-    
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    height: 48px !important;
+    font-size: 0.82rem !important;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     font-weight: 700;
     color: #334155;
     text-align: center;
-    line-height: 1.2;                   /* 두 줄이 되어도 간격 유지 */
   }
 
-  /* 2. 배너: 텍스트 박스 제거 및 높이 고정 */
-  .main-banner .banner-text {
-    display: none !important;
-  }
-  .main-banner {
-    height: 160px !important; 
-    margin: 10px 15px 20px !important;
-  }
-
-  /* 3. 검색창: 우측 정렬 유지 */
-  .nav-row {
-    display: flex !important;
-    flex-direction: column !important;
-  }
+  /* ⭐ 핵심: 검색창을 메뉴 그리드의 빈 공간(8~9번 칸)으로 강제 배치 */
   .nav-search {
-    align-self: flex-end !important; 
-    margin-right: 15px !important;
-    width: auto !important;
-    min-width: 150px !important;
+    display: grid !important; /* 내부 요소 배치를 위해 그리드 사용 */
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    
+    /* 3열 그리드 중 2번째 칸부터 3번째 칸까지 차지 (2칸 너비) */
+    grid-column: 2 / 4; 
+    grid-row: 3 / 4; /* 고객지원이 있는 3번째 줄에 배치 */
+    
+    width: 100% !important;
+    max-width: none !important;
+    height: 48px !important; /* 메뉴 버튼과 동일한 높이 */
+    margin: -58px 0 0 0 !important; /* 상단 메뉴와의 간격 조절 (메뉴 gap 포함) */
+    
+    background: #fff !important;
+    border: 1px solid var(--brand) !important; /* 검색창임을 강조하기 위해 포인트 컬러 테두리 */
+    border-radius: 8px !important;
+    padding: 0 10px !important;
+    box-shadow: none !important;
+    z-index: 10;
   }
 
-  /* 4. 미디어 섹션: 비율 최적화 (0.55 : 1.45) */
+  /* 검색창 내부 입력칸/버튼 높이 맞춤 */
+  .nav-search input[type="search"] {
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 14px !important;
+  }
+
+  /* 2. 배너: 텍스트 박스 제거 */
+  .main-banner .banner-text { display: none !important; }
+  .main-banner { height: 160px !important; margin-bottom: 20px !important; }
+
+  /* 3. 미디어 섹션 비율 최적화 */
   .media-row {
-    display: grid !important;
     grid-template-columns: 0.55fr 1.45fr !important; 
     gap: 12px !important;
-    padding: 0 15px !important;
+    padding: 0 5px !important;
   }
+  .copy h3 { font-size: 1rem !important; }
+  .copy p { font-size: 0.85rem !important; word-break: keep-all; }
 
-  .copy h3 { font-size: 1rem !important; margin-bottom: 5px !important; }
-  .copy p { 
-    font-size: 0.85rem !important; 
-    line-height: 1.5 !important;
-    word-break: keep-all !important; 
-  }
-
-  /* 5. 로고 및 카드 정리 */
-  .logo { width: 100px !important; margin: 0 auto 10px !important; }
+  /* 4. 로고 및 카드 정리 */
+  .logo { width: 100px !important; margin: 0 auto 5px !important; }
   .title { flex-direction: column !important; padding: 10px !important; }
   .intro-cards { grid-template-columns: 1fr !important; }
 }
