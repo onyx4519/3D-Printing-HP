@@ -1590,101 +1590,62 @@ mark.key {
   transform: translateY(0);
 }
 
-/* ============================================================
-   📱 모바일 최종 해결 (검색창 및 레이아웃 교정)
-   ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 헤더 로고 중앙 정렬 */
-  .title { 
+  /* ✅ 1. 헤더 로고 및 상단 영역 개선 */
+  body .title { 
     display: flex !important;
     flex-direction: column !important; 
     align-items: center !important;
-    padding: 15px 0 !important;
+    padding: 20px 0 15px !important; /* 상단 여백을 충분히 주어 시원하게 변경 */
     height: auto !important;
-    position: relative !important; /* 고정 해제 원할 시 static */
+    background: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important; /* 미세한 구분선 추가 */
   }
   
-  .logo-link { display: block; margin-bottom: 10px; }
-  .logo { width: 100px !important; margin: 0 auto !important; }
-
-  /* 2. 네비게이션 컨테이너: 메뉴와 검색창을 위한 높이 확보 */
-  .nav-row {
-    display: block !important;
-    position: relative !important;
-    width: 100% !important;
-    padding: 0 15px !important;
-    min-height: 185px !important; 
+  body .logo { 
+    width: 110px !important; /* 크기 살짝 키움 */
+    margin-bottom: 15px !important; 
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); /* 로고가 더 선명해 보이게 */
   }
 
-  /* 3. 메뉴 그리드: 3열 강제 고정 */
-  .menu {
+  /* ✅ 3. 메뉴 그리드: 가독성 및 터치 UX 개선 */
+  body .menu {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 10px !important;
+    gap: 8px !important; /* 간격을 살짝 줄여서 여백 밸런스 조정 */
     width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    list-style: none !important;
+    margin: 0 0 10px 0 !important; /* 아래 검색창과의 간격 확보 */
   }
 
-  /* 메뉴 버튼 디자인 */
-  .menu-item > a {
+  body .menu-item > a {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    height: 48px !important;
-    font-size: clamp(0.75rem, 2.8vw, 0.85rem) !important;
-    font-weight: 700;
-    word-break: keep-all !important;
-    background: #f8fafc;
+    height: 52px !important; /* 터치하기 더 편하게 높이 소폭 증가 */
+    
+    /* 폰트 가독성 향상 */
+    font-size: 0.85rem !important; 
+    letter-spacing: -0.02em !important; /* 한글 가독성을 위해 자간 살짝 축소 */
+    font-weight: 600;
+    
+    background: #ffffff; /* 배경을 깨끗한 흰색으로 */
     border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    border-radius: 10px; /* 조금 더 둥글게 */
     color: #334155;
-    text-align: center;
-    transition: background 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02); /* 입체감 살짝 추가 */
+    transition: all 0.2s ease;
   }
 
-  /* 4. 검색창: 7번 메뉴(고객지원) 옆으로 배치 */
-  .nav-search {
-    display: flex !important;
-    align-items: center;
-    position: absolute !important;
-    top: 116px !important; /* 메뉴 세 번째 줄 높이에 맞춤 */
-    left: calc(33.33% + 25px) !important; /* 7번 메뉴 오른쪽 공간 확보 */
-    right: 15px !important; 
-    width: auto !important; 
-    height: 48px !important;
-    background: #ffffff !important;
-    border: 1.5px solid var(--brand) !important; /* 기존 브랜드 색상 변수 사용 */
-    border-radius: 8px !important;
-    padding: 0 12px !important;
-    margin: 0 !important;
-    z-index: 100;
-    box-shadow: none !important; 
+  /* 메뉴 클릭(터치) 시 피드백 효과 */
+  body .menu-item > a:active {
+    background: #f1f5f9;
+    transform: scale(0.97);
+    border-color: #2563eb;
   }
 
-  .nav-search input[type="search"] {
-    flex: 1;
-    width: 100% !important;
-    border: none !important;
-    outline: none !important;
-    font-size: 14px !important;
-    background: transparent !important;
+  /* 검색창 위치 자동 보정 (3번 수정에 따른 동기화) */
+  body .nav-search {
+    top: 124px !important; /* 52px 높이 메뉴들에 맞춰 위치 재조정 */
   }
-
-  /* 5. 배너 및 기타 섹션 모바일 최적화 */
-  .main-banner { height: 160px !important; margin: 15px !important; border-radius: 12px !important; }
-  .main-banner .banner-text { display: none !important; } /* 모바일에서 텍스트 가림 */
-  
-  /* 미디어 섹션: 이미지를 작게, 텍스트를 넓게 */
-  .media-row { 
-    grid-template-columns: 1fr !important; /* 모바일은 1열이 가독성이 더 좋습니다 */
-    gap: 20px !important; 
-  }
-  
-  .intro-cards { grid-template-columns: 1fr !important; }
-
-  /* 메가박스(서브메뉴)는 모바일에서 가림 (클릭 시 노출되도록 JS 수정 전까지) */
-  .mega-box { display: none !important; }
 }
