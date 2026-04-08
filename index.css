@@ -1585,11 +1585,18 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 (검색창 위치 및 겹침 해결 최종본)
+   📱 모바일 전용 최적화 (7번 메뉴 노출 & 검색창 우측 배치 최종본)
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 네비게이션: 메뉴와 검색창을 하나의 그리드로 통합 */
+  /* 1. 헤더 및 네비게이션 레이아웃 */
+  .title { 
+    flex-direction: column !important; 
+    padding: 10px !important; 
+    height: auto !important;
+  }
+  .logo { width: 100px !important; margin: 0 auto 5px !important; }
+
   .nav-row {
     display: flex !important;
     flex-direction: column !important;
@@ -1597,10 +1604,10 @@ mark.key {
     padding: 0 15px !important;
   }
 
-  /* 메뉴 그리드: 검색창이 들어올 수 있도록 설정 */
+  /* 2. 메뉴 그리드: 3열 강제 유지 */
   .menu {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important; /* 3열 유지 */
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 10px !important;
     width: 100% !important;
     margin: 0 !important;
@@ -1609,7 +1616,7 @@ mark.key {
     position: relative !important;
   }
 
-  /* 메뉴 버튼 스타일 균일화 */
+  /* 메뉴 버튼 스타일 */
   .menu-item > a {
     display: flex !important;
     align-items: center;
@@ -1628,24 +1635,25 @@ mark.key {
     overflow: hidden;
   }
 
-  /* ⭐ 2. 검색창: 7번 옆 빈 공간에 강제 안착 (겹침 해결) */
+  /* ⭐ 3. 검색창: 7번 옆 2~3열 영역 내 우측 정렬 (겹침 방지) */
   .nav-search {
     display: flex !important;
     align-items: center;
     
-    /* 기존의 margin-top이나 absolute 설정을 무효화하고 그리드 흐름에 편입 */
-    grid-column: 2 / 4 !important; /* 2번째 칸부터 3번째 칸 끝까지 차지 */
+    /* 2번째 칸부터 3번째 칸 영역 지정 */
+    grid-column: 2 / 4 !important; 
+    justify-self: end; /* ⭐ 할당 영역 내에서 우측으로 밀어 7번과 거리 확보 */
     
-    /* 7번 메뉴(고객지원)와 같은 줄에 있도록 강제 정렬 */
-    transform: translateY(-58px) !important; /* 메뉴 높이+간격만큼 위로 이동 */
-    margin-bottom: -48px !important; /* 뒤따라오는 요소(배너)와의 간격 유지 */
+    /* 7번 메뉴(고객지원)와 같은 높이에 두기 위해 위로 이동 */
+    transform: translateY(-58px) !important; 
+    margin-bottom: -48px !important; 
     
     height: 48px !important;
     width: 100% !important;
-    max-width: none !important; /* 영역을 꽉 채우도록 설정 */
+    max-width: 200px !important; /* ⭐ 너무 길어지지 않게 고정 */
     
     background: #ffffff !important;
-    border: 1.5px solid #2563eb !important; /* 검색창 강조 */
+    border: 1.5px solid #2563eb !important;
     border-radius: 8px !important;
     padding: 0 12px !important;
     position: relative !important;
@@ -1660,9 +1668,10 @@ mark.key {
     outline: none !important;
     font-size: 14px !important;
     background: transparent !important;
+    color: #334155;
   }
 
-  /* 3. 배너: 텍스트 제거 및 간격 조정 */
+  /* 4. 배너: 텍스트 제거 및 높이 압축 */
   .main-banner .banner-text { display: none !important; }
   .main-banner { 
     height: 160px !important; 
@@ -1670,7 +1679,7 @@ mark.key {
     border-radius: 12px !important;
   }
 
-  /* 4. 미디어 섹션: 글자 가독성 비율 (이미지 줄이고 글자 늘림) */
+  /* 5. 미디어 섹션: 가독성 비율 최적화 (0.55 : 1.45) */
   .media-row {
     display: grid !important;
     grid-template-columns: 0.55fr 1.45fr !important;
@@ -1680,8 +1689,6 @@ mark.key {
   .copy h3 { font-size: 1rem !important; margin-bottom: 5px !important; font-weight: 800; }
   .copy p { font-size: 0.82rem !important; line-height: 1.5 !important; word-break: keep-all; }
 
-  /* 5. 헤더 로고 중앙 */
-  .title { flex-direction: column !important; padding: 10px !important; height: auto !important; }
-  .logo { width: 100px !important; margin: 0 auto 5px !important; }
-  .intro-cards { grid-template-columns: 1fr !important; }
+  /* 6. 카드 섹션: 1열 배치 */
+  .intro-cards { grid-template-columns: 1fr !important; padding: 0 20px !important; }
 }
