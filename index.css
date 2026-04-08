@@ -1585,11 +1585,11 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 최종본 (우측 끝선 정밀 교정 병합)
+   📱 모바일 전용 최적화 최종본 (오른쪽 끝선 정밀 일치)
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 네비게이션: 헤더 및 로고 중앙 정렬 */
+  /* 1. 헤더 레이아웃 정리 */
   .title { 
     flex-direction: column !important; 
     padding: 10px !important; 
@@ -1597,15 +1597,15 @@ mark.key {
   }
   .logo { width: 100px !important; margin: 0 auto 5px !important; }
 
-  /* 2. 전체 레이아웃 부모: 검색창 위치의 기준점이 됨 */
+  /* 2. 전체 레이아웃 부모: 검색창의 위치 기준점 */
   .nav-row {
     display: flex !important;
     flex-direction: column !important;
     width: 100% !important;
-    padding: 0 15px !important; /* 좌우 여백 15px 고정 */
-    gap: 10px !important;
+    padding: 0 15px !important; /* ⭐ 좌우 여백 15px 고정 */
+    position: relative !important; /* ⭐ 검색창 absolute 배치의 기준 */
     box-sizing: border-box !important;
-    position: relative !important; /* ⭐ 절대 위치(absolute)의 기준선 */
+    gap: 10px !important;
   }
 
   /* 3. 메뉴 그리드: 3열 강제 유지 */
@@ -1619,27 +1619,23 @@ mark.key {
     list-style: none !important;
   }
 
-  /* 메뉴 버튼 스타일 */
   .menu-item > a {
     display: flex !important;
     align-items: center;
     justify-content: center;
     height: 48px !important;
     font-size: clamp(0.72rem, 2.6vw, 0.82rem) !important;
-    line-height: 1.15 !important;
     font-weight: 700;
     word-break: keep-all !important;
     text-align: center;
-    padding: 0 4px !important;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     color: #334155;
-    overflow: hidden;
     box-sizing: border-box !important;
   }
 
-  /* ⭐ 4. 검색창: 오른쪽 끝선을 부모 패딩에 맞춰 강제 고정 */
+  /* ⭐ 4. 검색창: 상단 버튼 라인에 맞춰 오른쪽 끝선 강제 고정 */
   .nav-search {
     display: flex !important;
     align-items: center;
@@ -1647,13 +1643,13 @@ mark.key {
 
     /* 핵심: 너비 계산 대신 '오른쪽 좌표'를 직접 지정하여 끝선 일치 */
     position: absolute !important;
-    right: 15px !important; /* 부모(.nav-row)의 패딩 15px과 일치시켜 끝선을 맞춤 */
+    right: 15px !important; /* 부모(.nav-row)의 패딩 15px과 일치시켜 상단 버튼 끝선과 맞춤 */
     
-    /* 너비: 상단 버튼 라인에 맞춘 정밀 수치 */
-    width: calc((100% - 30px) * 0.666 + 4px) !important; 
+    /* 너비: 전체 폭에서 메뉴 1칸과 간격을 뺀 나머지 (상단 2~3열 영역) */
+    width: calc((100% - 30px) * 0.666 + 5px) !important; 
     max-width: none !important;
     
-    /* 수평 위치 조정 (7번 메뉴 옆으로 이동) */
+    /* 수평 위치: 메뉴 가장 아랫줄(7번 옆)에 배치 */
     bottom: 0 !important; 
     margin: 0 !important;
     
@@ -1665,6 +1661,7 @@ mark.key {
     z-index: 10;
   }
 
+  /* 검색창 내부 입력 필드 */
   .nav-search input[type="search"] {
     flex: 1;
     width: 100% !important;
@@ -1672,26 +1669,13 @@ mark.key {
     outline: none !important;
     font-size: 14px !important;
     background: transparent !important;
-    color: #334155;
   }
 
   /* 5. 배너 및 본문 섹션 최적화 */
   .main-banner .banner-text { display: none !important; }
-  .main-banner { 
-    height: 160px !important; 
-    margin: 20px 15px 25px !important; 
-    border-radius: 12px !important;
-  }
-
-  .media-row {
-    display: grid !important;
-    grid-template-columns: 0.6fr 1.4fr !important;
-    gap: 12px !important;
-    padding: 0 10px !important;
-    align-items: start !important;
-  }
-  .copy h3 { font-size: 1rem !important; margin-bottom: 5px !important; font-weight: 800; }
-  .copy p { font-size: 0.82rem !important; line-height: 1.5 !important; word-break: keep-all; }
-
-  .intro-cards { grid-template-columns: 1fr !important; padding: 0 20px !important; }
+  .main-banner { height: 160px !important; margin: 20px 15px 25px !important; }
+  .media-row { grid-template-columns: 0.6fr 1.4fr !important; gap: 12px !important; padding: 0 10px !important; }
+  .copy h3 { font-size: 1rem !important; }
+  .copy p { font-size: 0.82rem !important; word-break: keep-all; }
+  .intro-cards { grid-template-columns: 1fr !important; }
 }
