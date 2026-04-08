@@ -1590,62 +1590,110 @@ mark.key {
   transform: translateY(0);
 }
 
+/* ============================================================
+    📱 모바일 최적화 (768px 이하)
+    7번 메뉴 옆 공간(8, 9번)을 검색창으로 완벽하게 채움
+   ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* ✅ 1. 헤더 로고 및 상단 영역 개선 */
+  /* 1. 헤더 구조: 로고를 중앙으로 배치 */
   body .title { 
     display: flex !important;
     flex-direction: column !important; 
     align-items: center !important;
-    padding: 20px 0 15px !important; /* 상단 여백을 충분히 주어 시원하게 변경 */
+    padding: 20px 0 !important;
     height: auto !important;
+    position: relative !important;
     background: #ffffff !important;
-    border-bottom: 1px solid #f1f5f9 !important; /* 미세한 구분선 추가 */
   }
   
   body .logo { 
-    width: 110px !important; /* 크기 살짝 키움 */
+    width: 100px !important; 
     margin-bottom: 15px !important; 
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); /* 로고가 더 선명해 보이게 */
   }
 
-  /* ✅ 3. 메뉴 그리드: 가독성 및 터치 UX 개선 */
+  /* 2. 네비게이션 영역: 메뉴와 검색창이 들어갈 높이 확보 */
+  body .nav-row {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    padding: 0 15px !important; /* 전체 가이드 라인 15px */
+    min-height: 180px !important; 
+  }
+
+  /* 3. 메뉴 그리드: 3열 강제 고정 */
   body .menu {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important; /* 간격을 살짝 줄여서 여백 밸런스 조정 */
+    gap: 10px !important; /* 메뉴 사이 간격 */
     width: 100% !important;
-    margin: 0 0 10px 0 !important; /* 아래 검색창과의 간격 확보 */
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
   }
 
+  /* 메뉴 버튼 디자인 */
   body .menu-item > a {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    height: 52px !important; /* 터치하기 더 편하게 높이 소폭 증가 */
-    
-    /* 폰트 가독성 향상 */
-    font-size: 0.85rem !important; 
-    letter-spacing: -0.02em !important; /* 한글 가독성을 위해 자간 살짝 축소 */
-    font-weight: 600;
-    
-    background: #ffffff; /* 배경을 깨끗한 흰색으로 */
+    height: 48px !important;
+    font-size: 0.85rem !important;
+    font-weight: 700;
+    background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 10px; /* 조금 더 둥글게 */
+    border-radius: 8px;
     color: #334155;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02); /* 입체감 살짝 추가 */
-    transition: all 0.2s ease;
+    text-align: center;
   }
 
-  /* 메뉴 클릭(터치) 시 피드백 효과 */
-  body .menu-item > a:active {
-    background: #f1f5f9;
-    transform: scale(0.97);
-    border-color: #2563eb;
-  }
-
-  /* 검색창 위치 자동 보정 (3번 수정에 따른 동기화) */
+  /* ⭐ 4. 검색창: 5번 왼쪽(2열 시작) ~ 6번 오른쪽(3열 끝) 일치 */
   body .nav-search {
-    top: 124px !important; /* 52px 높이 메뉴들에 맞춰 위치 재조정 */
+    display: flex !important;
+    align-items: center;
+    position: absolute !important;
+    
+    /* 세로 위치: 3행(7번 메뉴와 수평) */
+    top: 116px !important; 
+
+    /* 왼쪽 끝: 2열 시작점(5번 메뉴 왼쪽 선과 일치) */
+    /* 1열(33.33%) 너비 + 간격(10px)을 고려한 정밀 계산 */
+    left: calc(33.33% + 25px) !important; 
+
+    /* 오른쪽 끝: 3열 끝점(6번 메뉴 오른쪽 선과 일치) */
+    /* 부모 컨테이너의 padding(15px)과 일치시켜 세로선 정렬 */
+    right: 15px !important; 
+
+    width: auto !important; 
+    height: 48px !important;
+    background: #ffffff !important;
+    border: 1.5px solid var(--brand, #2563eb) !important;
+    border-radius: 8px !important;
+    padding: 0 12px !important;
+    z-index: 1000 !important;
+    box-shadow: none !important; 
+  }
+
+  /* 검색창 내부 입력 필드 */
+  body .nav-search input[type="search"] {
+    flex: 1;
+    width: 100% !important;
+    border: none !important;
+    outline: none !important;
+    font-size: 14px !important;
+    background: transparent !important;
+  }
+
+  /* 5. 배너 및 미디어 섹션 반응형 조절 */
+  body .main-banner { 
+    height: 160px !important; 
+    margin: 15px !important; 
+    border-radius: 12px !important; 
+  }
+  body .main-banner .banner-text { display: none !important; }
+  
+  body .media-row { 
+    grid-template-columns: 1fr !important; 
+    gap: 20px !important; 
   }
 }
