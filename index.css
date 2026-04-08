@@ -1614,19 +1614,36 @@ mark.key {
   }
 
   /* 7번째 메뉴(고객지원) 스타일 유지 */
-  .menu-item > a {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    height: 48px !important;
-    font-size: 0.82rem !important;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-weight: 700;
-    color: #334155;
-    text-align: center;
-  }
+.menu-item > a {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 48px !important;
+  
+  /* 1. 폰트 최적화 */
+  font-size: clamp(0.7rem, 2.5vw, 0.82rem) !important; /* 화면 폭에 따라 글자 크기 자동 조절 */
+  line-height: 1.1 !important; /* 두 줄이 되어도 글자가 겹치지 않게 간격 좁힘 */
+  letter-spacing: -0.03em !important; /* 자간을 살짝 좁혀 글자 깨짐 방지 */
+  font-weight: 700;
+  
+  /* 2. 텍스트 넘침 방지 */
+  word-break: keep-all !important; /* 한글 단어가 어색하게 잘리지 않게 함 */
+  text-align: center;
+  padding: 0 2px !important;
+  overflow: hidden; /* 박스 밖으로 나가는 글자 숨김 */
+  
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  color: #334155;
+  transition: background 0.2s; /* 클릭 시 부드러운 반응 */
+}
+
+/* 클릭(활성화) 시 글자 깨짐 방지 및 강조 */
+.menu-item > a:active, .menu-item > a:focus {
+  background: #e2e8f0;
+  outline: none;
+}
 
   /* ⭐ 핵심: 검색창을 메뉴 그리드의 빈 공간(8~9번 칸)으로 강제 배치 */
   .nav-search {
