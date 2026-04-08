@@ -1584,23 +1584,31 @@ mark.key {
   transform: translateY(0);
 }
 
-/* ============================================================
-   📱 모바일 전용 최적화 최종본 (오른쪽 끝선 정밀 일치)
-   ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 네비게이션 컨테이너 */
+  /* 1. 로고: 다시 중앙 상단으로 */
+  .title { 
+    display: flex !important;
+    flex-direction: column !important; 
+    align-items: center !important;
+    padding: 10px 0 !important;
+    height: auto !important;
+  }
+  .logo { width: 100px !important; margin-bottom: 10px !important; }
+
+  /* 2. 네비게이션 컨테이너: 그리드 유지 및 기준점 확보 */
   .nav-row {
-    display: block !important;
+    display: block !important; /* flex 해제 */
+    position: relative !important;
     width: 100% !important;
     padding: 0 15px !important;
+    min-height: 165px; /* 메뉴 3줄 공간 확보 */
   }
 
-  /* 2. 메뉴와 검색창을 하나의 그리드로 통합 제어 */
+  /* 3. 메뉴 그리드: 무조건 3열 고정 */
   .menu {
     display: grid !important;
-    /* 3열로 나누되, 검색창이 들어갈 3번째 행까지 고려 */
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* ⭐ 3열 강제 */
     gap: 10px !important;
     width: 100% !important;
     margin: 0 !important;
@@ -1608,22 +1616,17 @@ mark.key {
     list-style: none !important;
   }
 
-  /* 3. 메뉴 아이템 설정 */
   .menu-item { display: block !important; }
-  
-  /* 7번 메뉴(고객지원) 위치 고정 (3행 1열) */
-  .menu-item:nth-child(7) {
-    grid-column: 1 / 2 !important;
-  }
 
-  /* 메뉴 버튼 스타일 */
+  /* 메뉴 버튼 디자인 */
   .menu-item > a {
     display: flex !important;
     align-items: center;
     justify-content: center;
     height: 48px !important;
-    font-size: clamp(0.72rem, 2.6vw, 0.82rem) !important;
+    font-size: clamp(0.7rem, 2.5vw, 0.8rem) !important;
     font-weight: 700;
+    word-break: keep-all !important;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
@@ -1631,29 +1634,27 @@ mark.key {
     text-align: center;
   }
 
-  /* 4. ⭐ 검색창: 그리드 시스템의 8~9번 칸으로 강제 편입 */
+  /* ⭐ 4. 검색창: 7번 메뉴 옆 빈공간(8~9번)에 자석처럼 고정 */
   .nav-search {
-    /* 기존 마진/위치 설정 초기화 */
-    margin: 0 !important; 
-    position: static !important; 
-    
     display: flex !important;
     align-items: center;
     
-    /* 3행의 2번째 칸부터 4번째 칸 앞(3번칸 끝)까지 점유 */
-    grid-column: 2 / 4 !important; 
-    grid-row: 3 / 4 !important; /* 7번 메뉴와 같은 줄(3행) 강제 지정 */
+    /* 절대 위치로 3열 그리드의 마지막 2칸 영역을 차지 */
+    position: absolute !important;
+    bottom: 0 !important;
+    right: 18px !important; /* 오른쪽 끝 여백 (아주 살짝 줄임) */
     
-    /* 양단 크기를 아주 미세하게 줄이기 (요청 반영) */
-    width: calc(100% - 12px) !important; 
-    justify-self: center !important; 
-    
+    /* 너비: 전체 너비의 약 2/3에서 양단 여백을 뺀 값 */
+    width: calc(66.6% - 16px) !important; 
     height: 48px !important;
+    
     background: #ffffff !important;
     border: 1.5px solid #2563eb !important;
     border-radius: 8px !important;
     padding: 0 10px !important;
-    z-index: 10;
+    z-index: 100;
+    margin: 0 !important;
+    transform: none !important;
   }
 
   .nav-search input[type="search"] {
@@ -1665,8 +1666,17 @@ mark.key {
     background: transparent !important;
   }
 
-  /* 배너 및 기타 섹션 (기존 유지) */
+  /* 5. 배너 및 본문 (기존 최적화 유지) */
   .main-banner .banner-text { display: none !important; }
-  .main-banner { height: 160px !important; margin: 15px 15px 25px !important; }
-  .media-row { grid-template-columns: 0.6fr 1.4fr !important; gap: 12px !important; }
+  .main-banner { height: 160px !important; margin: 20px 15px !important; border-radius: 12px !important; }
+
+  .media-row {
+    display: grid !important;
+    grid-template-columns: 0.6fr 1.4fr !important;
+    gap: 12px !important;
+    padding: 0 10px !important;
+  }
+  .copy h3 { font-size: 1rem !important; }
+  .copy p { font-size: 0.82rem !important; line-height: 1.5 !important; }
+  .intro-cards { grid-template-columns: 1fr !important; }
 }
