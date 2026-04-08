@@ -1585,11 +1585,11 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 최종본 (좌우 정렬 및 겹침 해결)
+   📱 모바일 전용 최적화 최종본 (정밀 교정 완료)
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 네비게이션: 헤더 구성 요소 수직 정렬 */
+  /* 1. 네비게이션: 헤더 구성 요소 중앙 정렬 */
   .title { 
     flex-direction: column !important; 
     padding: 10px !important; 
@@ -1643,19 +1643,18 @@ mark.key {
     display: flex !important;
     align-items: center;
     
-    /* 핵심 1: 테두리가 밖으로 나가지 않도록 박스 크기 계산 방식 고정 */
+    /* 테두리가 밖으로 나가지 않도록 박스 크기 계산 방식 고정 */
     box-sizing: border-box !important; 
     
-    /* 핵심 2: 2/3 너비에서 메뉴 간격(gap)을 고려한 정밀 계산식 */
-    /* 상단 버튼들과의 오차를 줄이기 위해 -7px로 미세 조정 */
+    /* 정밀 계산식: 2/3 너비에서 간격 오차를 고려해 -7px 적용 */
     width: calc(66.66% - 7px) !important; 
     max-width: none !important;
     
-    /* 핵심 3: 오른쪽 끝에 자석처럼 붙여서 3/6/9번 라인 일치 */
+    /* 오른쪽 끝에 자석처럼 붙여서 3/6/9번 라인 일치 */
     align-self: flex-end !important;
     margin-right: 0 !important; 
     
-    /* 수평 위치 유지 및 간격 조정 */
+    /* 7번 메뉴 옆으로 수평 이동 */
     margin-top: -58px !important; 
     margin-bottom: 15px !important;
     
@@ -1687,7 +1686,7 @@ mark.key {
 
   .media-row {
     display: grid !important;
-    grid-template-columns: 0.6fr 1.4fr !important;
+    grid-template-columns: 0.6fr 1.4fr !important; /* 이미지 대비 텍스트 비중 확대 */
     gap: 12px !important;
     padding: 0 10px !important;
     align-items: start !important;
