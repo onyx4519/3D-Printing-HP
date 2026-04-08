@@ -1585,68 +1585,70 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 최종본 (768px 이하)
+   📱 모바일 전용 최적화 (검색창 위치 및 겹침 해결 최종본)
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 네비게이션 부모: 기준점 및 공간 확보 */
+  /* 1. 네비게이션: 메뉴와 검색창을 하나의 그리드로 통합 */
   .nav-row {
-    display: block !important;
-    position: relative !important; /* 검색창 절대 위치의 기준 */
+    display: flex !important;
+    flex-direction: column !important;
     width: 100% !important;
     padding: 0 15px !important;
-    min-height: 160px; /* 메뉴 3줄이 들어갈 최소 높이 */
   }
 
-  /* 2. 메뉴 그리드: 3열 강제 유지 */
+  /* 메뉴 그리드: 검색창이 들어올 수 있도록 설정 */
   .menu {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* 3열 유지 */
     gap: 10px !important;
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
+    position: relative !important;
   }
 
-  /* 메뉴 버튼: 균일 높이 및 글자 깨짐 방지 */
+  /* 메뉴 버튼 스타일 균일화 */
   .menu-item > a {
     display: flex !important;
     align-items: center;
     justify-content: center;
     height: 48px !important;
-    font-size: clamp(0.7rem, 2.5vw, 0.82rem) !important;
+    font-size: clamp(0.72rem, 2.6vw, 0.82rem) !important;
     line-height: 1.15 !important;
     font-weight: 700;
     word-break: keep-all !important;
+    text-align: center;
+    padding: 0 4px !important;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     color: #334155;
-    text-align: center;
     overflow: hidden;
   }
 
-  /* 3. 검색창: 8~9번 영역(우측 하단)에 강제 안착 */
+  /* ⭐ 2. 검색창: 7번 옆 빈 공간에 강제 안착 (겹침 해결) */
   .nav-search {
     display: flex !important;
     align-items: center;
     
-    /* ⭐ 절대 위치를 사용하여 7번 메뉴 옆 빈 공간에 박아넣기 */
-    position: absolute !important;
-    bottom: 0 !important;  
-    right: 15px !important; 
+    /* 기존의 margin-top이나 absolute 설정을 무효화하고 그리드 흐름에 편입 */
+    grid-column: 2 / 4 !important; /* 2번째 칸부터 3번째 칸 끝까지 차지 */
     
-    /* 너비: 3열 중 2열 분량(66%) 내외에서 적절히 제한 */
-    width: calc(66.6% - 15px) !important; 
-    max-width: 200px !important; 
+    /* 7번 메뉴(고객지원)와 같은 줄에 있도록 강제 정렬 */
+    transform: translateY(-58px) !important; /* 메뉴 높이+간격만큼 위로 이동 */
+    margin-bottom: -48px !important; /* 뒤따라오는 요소(배너)와의 간격 유지 */
+    
     height: 48px !important;
+    width: 100% !important;
+    max-width: none !important; /* 영역을 꽉 채우도록 설정 */
     
     background: #ffffff !important;
-    border: 1.5px solid var(--brand) !important;
+    border: 1.5px solid #2563eb !important; /* 검색창 강조 */
     border-radius: 8px !important;
-    padding: 0 10px !important;
-    margin: 0 !important;
+    padding: 0 12px !important;
+    position: relative !important;
     z-index: 10;
   }
 
@@ -1660,28 +1662,26 @@ mark.key {
     background: transparent !important;
   }
 
-  /* 4. 배너: 텍스트 박스 제거 및 높이 압축 */
+  /* 3. 배너: 텍스트 제거 및 간격 조정 */
   .main-banner .banner-text { display: none !important; }
   .main-banner { 
-    height: clamp(140px, 20vh, 160px) !important; 
-    margin: 10px 15px 25px !important; 
+    height: 160px !important; 
+    margin: 15px 15px 25px !important; 
     border-radius: 12px !important;
   }
 
-  /* 5. 미디어 섹션: 가독성 비율 최적화 (0.6 : 1.4) */
+  /* 4. 미디어 섹션: 글자 가독성 비율 (이미지 줄이고 글자 늘림) */
   .media-row {
     display: grid !important;
-    grid-template-columns: 0.6fr 1.4fr !important;
+    grid-template-columns: 0.55fr 1.45fr !important;
     gap: 12px !important;
     padding: 0 10px !important;
   }
   .copy h3 { font-size: 1rem !important; margin-bottom: 5px !important; font-weight: 800; }
   .copy p { font-size: 0.82rem !important; line-height: 1.5 !important; word-break: keep-all; }
 
-  /* 6. 카드 섹션: 1열 배치 */
-  .intro-cards { grid-template-columns: 1fr !important; padding: 0 20px !important; }
-
-  /* 7. 헤더 로고 중앙 정렬 */
+  /* 5. 헤더 로고 중앙 */
   .title { flex-direction: column !important; padding: 10px !important; height: auto !important; }
   .logo { width: 100px !important; margin: 0 auto 5px !important; }
+  .intro-cards { grid-template-columns: 1fr !important; }
 }
