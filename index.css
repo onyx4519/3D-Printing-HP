@@ -1585,11 +1585,11 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 최종본 (정밀 교정 완료)
+   📱 모바일 전용 최적화 최종본 (우측 끝선 정밀 교정 병합)
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 네비게이션: 헤더 구성 요소 중앙 정렬 */
+  /* 1. 네비게이션: 헤더 및 로고 중앙 정렬 */
   .title { 
     flex-direction: column !important; 
     padding: 10px !important; 
@@ -1597,14 +1597,15 @@ mark.key {
   }
   .logo { width: 100px !important; margin: 0 auto 5px !important; }
 
-  /* 2. 전체 레이아웃 부모 설정 */
+  /* 2. 전체 레이아웃 부모: 검색창 위치의 기준점이 됨 */
   .nav-row {
     display: flex !important;
     flex-direction: column !important;
     width: 100% !important;
-    padding: 0 15px !important; /* 좌우 여백 고정 */
+    padding: 0 15px !important; /* 좌우 여백 15px 고정 */
     gap: 10px !important;
     box-sizing: border-box !important;
+    position: relative !important; /* ⭐ 절대 위치(absolute)의 기준선 */
   }
 
   /* 3. 메뉴 그리드: 3열 강제 유지 */
@@ -1618,7 +1619,7 @@ mark.key {
     list-style: none !important;
   }
 
-  /* 메뉴 버튼 스타일: 균일 높이 및 글자 깨짐 방지 */
+  /* 메뉴 버튼 스타일 */
   .menu-item > a {
     display: flex !important;
     align-items: center;
@@ -1638,25 +1639,23 @@ mark.key {
     box-sizing: border-box !important;
   }
 
-  /* ⭐ 4. 검색창: 상단 버튼 라인에 맞춰 양단 끝선 정밀 고정 */
+  /* ⭐ 4. 검색창: 오른쪽 끝선을 부모 패딩에 맞춰 강제 고정 */
   .nav-search {
     display: flex !important;
     align-items: center;
-    
-    /* 테두리가 밖으로 나가지 않도록 박스 크기 계산 방식 고정 */
     box-sizing: border-box !important; 
+
+    /* 핵심: 너비 계산 대신 '오른쪽 좌표'를 직접 지정하여 끝선 일치 */
+    position: absolute !important;
+    right: 15px !important; /* 부모(.nav-row)의 패딩 15px과 일치시켜 끝선을 맞춤 */
     
-    /* 정밀 계산식: 2/3 너비에서 간격 오차를 고려해 -7px 적용 */
-    width: calc(66.66% - 7px) !important; 
+    /* 너비: 상단 버튼 라인에 맞춘 정밀 수치 */
+    width: calc((100% - 30px) * 0.666 + 4px) !important; 
     max-width: none !important;
     
-    /* 오른쪽 끝에 자석처럼 붙여서 3/6/9번 라인 일치 */
-    align-self: flex-end !important;
-    margin-right: 0 !important; 
-    
-    /* 7번 메뉴 옆으로 수평 이동 */
-    margin-top: -58px !important; 
-    margin-bottom: 15px !important;
+    /* 수평 위치 조정 (7번 메뉴 옆으로 이동) */
+    bottom: 0 !important; 
+    margin: 0 !important;
     
     height: 48px !important;
     background: #ffffff !important;
@@ -1686,7 +1685,7 @@ mark.key {
 
   .media-row {
     display: grid !important;
-    grid-template-columns: 0.6fr 1.4fr !important; /* 이미지 대비 텍스트 비중 확대 */
+    grid-template-columns: 0.6fr 1.4fr !important;
     gap: 12px !important;
     padding: 0 10px !important;
     align-items: start !important;
