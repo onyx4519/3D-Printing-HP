@@ -1585,7 +1585,7 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 최종 해결 (768px 이하 / 수평 및 너비 완벽 교정)
+   📱 모바일 최종 해결 (검색창 왼쪽 정렬 및 수평 완벽 교정)
    ============================================================ */
 @media screen and (max-width: 768px) {
 
@@ -1599,13 +1599,13 @@ mark.key {
   }
   body .logo { width: 100px !important; margin-bottom: 10px !important; }
 
-  /* 2. 네비게이션 컨테이너: 높이 자동 확보 */
+  /* 2. 네비게이션 컨테이너 */
   body .nav-row {
     display: block !important;
     position: relative !important;
     width: 100% !important;
     padding: 0 15px !important;
-    min-height: 185px !important; /* 검색창 영역까지 공간 강제 확보 */
+    min-height: 185px !important; 
   }
 
   /* 3. 메뉴 그리드: 3열 강제 고정 */
@@ -1636,26 +1636,29 @@ mark.key {
     box-sizing: border-box !important;
   }
 
-  /* ⭐ 4. 검색창: 절대 좌표 정밀 타격 (7번 메뉴 옆 고정) */
+  /* ⭐ 4. 검색창: 7번 메뉴(고객지원) 옆으로 바짝 당겨서 고정 */
   body .nav-search {
     display: flex !important;
     align-items: center;
     
-    /* 3번째 줄(48px*2 + 10px*2 = 116px) 높이에 딱 붙이기 */
     position: absolute !important;
-    top: 116px !important; 
+    top: 116px !important; /* 7번 메뉴와 같은 높이 */
+    
+    /* ⭐ 핵심 수정: 오른쪽이 아닌 왼쪽 기준으로 당겨오기 */
+    /* 1번 칸 너비(33.3%) + 간격(10px) + 기본 패딩(15px) = 약 155~160px 지점 */
+    left: calc(33.3% + 25px) !important; 
+    
+    /* 너비: 오른쪽 끝선에 맞추기 위해 남은 공간 계산 */
     right: 15px !important; 
+    width: auto !important; /* width 대신 left/right로 너비 결정 */
     
-    /* 너비: 3개 열 중 2개 열의 폭을 계산하여 정밀 할당 */
-    width: calc(66.6% - 15px) !important; 
     height: 48px !important;
-    
     background: #ffffff !important;
     border: 1.5px solid #2563eb !important;
     border-radius: 8px !important;
     padding: 0 10px !important;
     margin: 0 !important;
-    z-index: 1000 !important; /* 다른 요소보다 무조건 위로 */
+    z-index: 1000 !important;
   }
 
   body .nav-search input[type="search"] {
@@ -1665,7 +1668,6 @@ mark.key {
     outline: none !important;
     font-size: 14px !important;
     background: transparent !important;
-    appearance: none;
   }
 
   /* 5. 배너 및 기타 섹션 */
