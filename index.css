@@ -1585,7 +1585,7 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 (768px 이하 / 최종 수평 정렬)
+   📱 모바일 전용 최적화 최종본 (좌우 정렬 및 겹침 해결)
    ============================================================ */
 @media screen and (max-width: 768px) {
 
@@ -1597,13 +1597,13 @@ mark.key {
   }
   .logo { width: 100px !important; margin: 0 auto 5px !important; }
 
-  /* 2. 전체 레이아웃: 메뉴와 검색창을 감싸는 박스 */
+  /* 2. 전체 레이아웃 부모 설정 */
   .nav-row {
     display: flex !important;
     flex-direction: column !important;
     width: 100% !important;
     padding: 0 15px !important;
-    gap: 10px !important; /* 메뉴와 검색창 사이 간격 */
+    gap: 10px !important;
   }
 
   /* 3. 메뉴 그리드: 3열 강제 유지 */
@@ -1614,48 +1614,55 @@ mark.key {
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+    list-style: none !important;
   }
 
-  /* 메뉴 버튼 스타일 */
+  /* 메뉴 버튼 스타일: 균일 높이 및 글자 깨짐 방지 */
   .menu-item > a {
     display: flex !important;
     align-items: center;
     justify-content: center;
     height: 48px !important;
     font-size: clamp(0.72rem, 2.6vw, 0.82rem) !important;
+    line-height: 1.15 !important;
     font-weight: 700;
     word-break: keep-all !important;
+    text-align: center;
+    padding: 0 4px !important;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     color: #334155;
-    text-align: center;
+    overflow: hidden;
   }
 
-  /* ⭐ 4. 검색창: 7번 메뉴 옆으로 끌어올리는 정밀 설정 */
+  /* ⭐ 4. 검색창: 좌우 끝선을 메뉴와 완벽하게 일치시킴 */
   .nav-search {
     display: flex !important;
     align-items: center;
     
-    /* 3열 중 2칸 너비만큼 설정 */
-    width: calc(66.6% + 4px) !important; 
-    max-width: none !important;
-    height: 48px !important;
+    /* 1번 열(고객지원 버튼) 너비를 비워두고 남은 공간 자동 채움 */
+    width: auto !important;
+    flex: 1 !important;
+    margin-left: 33.33% !important; /* 7번 메뉴의 영역만큼 왼쪽 여백 확보 */
+    padding-left: 10px !important;  /* 버튼과의 미세 간격 */
     
-    /* 메뉴(고객지원) 바로 오른쪽 빈 공간으로 강제 이동 */
-    align-self: flex-end !important; /* 오른쪽 정렬 */
-    margin-top: -58px !important;   /* 메뉴 높이(48px) + 간격(10px)만큼 위로 */
+    /* 수평 높이 맞춤 (7번 메뉴 옆으로 이동) */
+    margin-top: -58px !important; 
+    margin-bottom: 10px !important;
+    height: 48px !important;
     
     background: #ffffff !important;
     border: 1.5px solid #2563eb !important;
     border-radius: 8px !important;
-    padding: 0 12px !important;
+    padding-right: 12px !important;
+    position: relative !important;
     z-index: 10;
   }
 
   .nav-search input[type="search"] {
     flex: 1;
-    width: 0;
+    width: 100% !important;
     border: none !important;
     outline: none !important;
     font-size: 14px !important;
@@ -1666,15 +1673,19 @@ mark.key {
   .main-banner .banner-text { display: none !important; }
   .main-banner { 
     height: 160px !important; 
-    margin: 20px 15px 25px !important; /* 여백 충분히 확보 */
+    margin: 20px 15px 25px !important; 
+    border-radius: 12px !important;
   }
 
   .media-row {
     display: grid !important;
     grid-template-columns: 0.6fr 1.4fr !important;
     gap: 12px !important;
+    padding: 0 10px !important;
+    align-items: start !important;
   }
-  .copy h3 { font-size: 1rem !important; }
-  .copy p { font-size: 0.82rem !important; word-break: keep-all; }
-  .intro-cards { grid-template-columns: 1fr !important; }
+  .copy h3 { font-size: 1rem !important; margin-bottom: 5px !important; font-weight: 800; }
+  .copy p { font-size: 0.82rem !important; line-height: 1.5 !important; word-break: keep-all; }
+
+  .intro-cards { grid-template-columns: 1fr !important; padding: 0 20px !important; }
 }
