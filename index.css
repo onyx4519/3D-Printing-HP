@@ -1636,26 +1636,26 @@ mark.key {
     overflow: hidden;
   }
 
-  /* ⭐ 4. 검색창: 좌우 끝선을 메뉴와 완벽하게 일치시킴 */
+/* 3. 검색창: 좌우 너비 100% 복구 및 정렬 */
   .nav-search {
     display: flex !important;
     align-items: center;
     
-    /* 1번 열(고객지원 버튼) 너비를 비워두고 남은 공간 자동 채움 */
+    /* ⭐ 핵심: 너비를 잃지 않고 남은 공간을 꽉 채우는 설정 */
     width: auto !important;
-    flex: 1 !important;
-    margin-left: 33.33% !important; /* 7번 메뉴의 영역만큼 왼쪽 여백 확보 */
-    padding-left: 10px !important;  /* 버튼과의 미세 간격 */
+    flex: 1 !important;              /* 남은 공간(8~9번 칸)을 꽉 채움 */
+    margin-left: calc(33.33% + 5px) !important; /* 7번 메뉴 자리를 정확히 비움 */
+    margin-right: 0 !important;      /* 오른쪽 여백 제거하여 끝선 맞춤 */
     
-    /* 수평 높이 맞춤 (7번 메뉴 옆으로 이동) */
+    /* 수평 높이 정밀 맞춤 */
     margin-top: -58px !important; 
-    margin-bottom: 10px !important;
+    margin-bottom: 15px !important;
     height: 48px !important;
     
     background: #ffffff !important;
     border: 1.5px solid #2563eb !important;
     border-radius: 8px !important;
-    padding-right: 12px !important;
+    padding: 0 12px !important;
     position: relative !important;
     z-index: 10;
   }
@@ -1667,6 +1667,7 @@ mark.key {
     outline: none !important;
     font-size: 14px !important;
     background: transparent !important;
+    padding: 0 !important;
   }
 
   /* 5. 배너 및 본문 섹션 최적화 */
