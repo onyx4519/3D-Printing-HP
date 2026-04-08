@@ -1591,79 +1591,78 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 (가로 스크롤 제거 & 3열 배치)
+   📱 모바일 전용 최적화 (768px 이하에서만 작동)
    ============================================================ */
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 768px) {
 
-  /* 1. 배너: 텍스트 박스 완전 제거 */
+  /* 1. 배너: 텍스트 박스 완전 제거 및 높이 슬림화 */
   .main-banner .banner-text {
     display: none !important;
   }
   .main-banner {
-    height: 160px !important; /* 글자가 없으므로 높이를 더 슬림하게 */
-    margin: 10px 15px !important;
+    height: clamp(140px, 20vh, 180px) !important; /* 화면 높이에 따라 유연하게 조정 */
+    margin: 10px 15px 20px !important;
   }
 
-  /* 2. 메뉴: 가로 스크롤 대신 3열 격자 배치 */
+  /* 2. 메뉴: 3열 격자 배치 (가로 스크롤 없음) */
   .menu {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important; /* ⭐ 한 줄에 정확히 3개 */
+    grid-template-columns: repeat(3, 1fr) !important; /* 33.3%씩 3등분 */
     gap: 8px !important;
-    width: 100% !important;
-    padding: 0 15px !important;
+    width: calc(100% - 30px) !important; /* 양옆 여백 고려 */
     margin: 0 auto 15px !important;
-    max-width: 100vw; /* 가로 스크롤 방지 */
   }
 
   .menu-item > a {
-    font-size: 0.82rem !important; /* 3개를 넣기 위해 폰트 최적화 */
-    padding: 10px 2px !important;
-    background: #f1f5f9; /* 클릭하기 편하게 배경색 추가 */
+    font-size: 0.85rem !important; /* 가독성 확보를 위한 최소 크기 */
+    padding: 12px 2px !important; /* 터치하기 편하도록 세로 높이 확보 */
+    background: #f8fafc; /* 약간 더 밝은 배경색 */
+    border: 1px solid #e2e8f0; /* 테두리를 넣어 버튼 느낌 강조 */
     border-radius: 8px;
     display: block;
     text-align: center;
     font-weight: 700;
+    color: #334155;
   }
 
-  /* 3. 검색창: 우측 끝 정렬 */
+  /* 3. 검색창: 우측 정렬 (메뉴와 분리된 느낌) */
   .nav-row {
     display: flex !important;
     flex-direction: column !important;
-    width: 100% !important;
-    align-items: flex-end !important; /* 모든 요소를 우측으로 */
+    align-items: stretch !important;
   }
 
   .nav-search {
     align-self: flex-end !important; 
     margin-right: 15px !important;
     width: auto !important;
-    min-width: 160px !important;
-    background: #fff;
-    border: 1px solid #ddd;
+    min-width: 150px !important;
+    padding: 6px 12px !important;
   }
 
-  /* 4. 미디어 섹션: 가독성 비율 조정 (0.6 : 1.4) */
+  /* 4. 미디어 섹션: 가독성 비율 최적화 (0.55 : 1.45) */
   .media-row {
     display: grid !important;
-    grid-template-columns: 0.6fr 1.4fr !important; /* 이미지 공간 줄이고 글 공간 확보 */
-    gap: 12px !important;
+    grid-template-columns: 0.55fr 1.45fr !important; 
+    gap: 15px !important;
     padding: 0 15px !important;
-    align-items: start !important;
+    align-items: flex-start !important;
   }
 
   .copy h3 {
     font-size: 1rem !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 5px !important;
   }
 
   .copy p {
-    font-size: 0.82rem !important;
+    font-size: 0.85rem !important;
     line-height: 1.5 !important;
-    word-break: keep-all !important; /* 한글 단어 단위 줄바꿈 */
+    word-break: keep-all !important;
+    color: #475569;
   }
 
-  /* 5. 기타 요소 정리 */
-  .logo { width: 110px !important; margin: 0 auto 10px !important; }
+  /* 5. 로고 및 기타 보정 */
+  .logo { width: 100px !important; margin: 0 auto 10px !important; }
   .title { flex-direction: column !important; padding: 10px !important; }
-  .intro-cards { grid-template-columns: 1fr !important; } /* 카드는 1열 */
+  .intro-cards { grid-template-columns: 1fr !important; }
 }
