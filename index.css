@@ -1651,22 +1651,19 @@ mark.key {
     box-sizing: border-box !important;
   }
 
-/* ⭐ 검색창: 5번 메뉴 왼쪽 선 ~ 6번 메뉴 오른쪽 끝 일치 */
+/* ⭐ 검색창 왼쪽을 5번 박스 시작선으로 확장 */
 body .nav-search {
   display: flex !important;
   align-items: center;
   position: absolute !important;
-  
-  /* 7번 메뉴(3행 1열)와 같은 높이에 배치 */
   top: 116px !important; 
 
-  /* [왼쪽 정렬] 
-     부모 패딩(15px) + 1열 너비(33.33%) + 간격(10px) 
-     이 계산값이 정확히 2열(5번 메뉴)의 시작 라인입니다. */
-  left: calc(15px + 33.33% + 10px) !important; 
+  /* [핵심 수정] 
+     기존 calc(15px + ...)에서 앞의 15px을 제거하거나 값을 확 줄여야 합니다.
+     1열 너비(33.3%) + 간격(10px)을 고려했을 때 아래 수치가 5번 왼쪽 선에 가장 가깝습니다. */
+  left: calc(33.33% + 20px) !important; 
 
-  /* [오른쪽 정렬] 
-     부모 패딩(15px)만큼 띄우면 3열(6번 메뉴)의 오른쪽 끝 라인과 일치합니다. */
+  /* 오른쪽은 지금처럼 유지 (6번 끝선 일치) */
   right: 15px !important; 
 
   width: auto !important; 
@@ -1676,7 +1673,6 @@ body .nav-search {
   border-radius: 8px !important;
   padding: 0 12px !important;
   z-index: 1000 !important;
-  box-shadow: none !important; 
 }
 
   /* 검색창 내부 입력 필드 */
