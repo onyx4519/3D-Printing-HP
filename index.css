@@ -1591,15 +1591,12 @@ mark.key {
 }
 
 /* ============================================================
-    📱 모바일 최적화 (768px 이하)
-    - 검색창 왼쪽: 부모 패딩(15px) + 1열 너비(33.33%) + 간격(10px) 
-      => 5번 메뉴 왼쪽 선과 일치
-    - 검색창 오른쪽: 부모 패딩(15px) 
-      => 6번 메뉴 오른쪽 선과 일치
+    📱 모바일 최적화 (768px 이하) - 최종 수정본
+    - 검색창 왼쪽 선을 5번 메뉴(2행 2열) 시작선에 정확히 일치
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 헤더: 중앙 정렬 및 여백 */
+  /* 1. 헤더: 중앙 정렬 */
   body .title { 
     display: flex !important;
     flex-direction: column !important; 
@@ -1615,24 +1612,23 @@ mark.key {
     margin-bottom: 15px !important; 
   }
 
-  /* 2. 네비게이션 컨테이너: 패딩 15px 설정 */
+  /* 2. 네비게이션 컨테이너 */
   body .nav-row {
     display: block !important;
     position: relative !important;
     width: 100% !important;
-    padding: 0 15px !important; /* ⭐ 정렬의 기준이 되는 15px */
+    padding: 0 15px !important; /* 좌우 기본 여백 15px */
     min-height: 185px !important; 
   }
 
-  /* 3. 메뉴 그리드: 3열 고정 (열당 33.33%) */
+  /* 3. 메뉴 그리드: 3열 고정 */
   body .menu {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 10px !important; /* 메뉴 사이 간격 10px */
+    gap: 10px !important; 
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
-    list-style: none !important;
   }
 
   /* 메뉴 버튼 디자인 */
@@ -1648,33 +1644,32 @@ mark.key {
     border-radius: 8px;
     color: #334155;
     text-align: center;
-    box-sizing: border-box !important;
   }
 
-/* ⭐ 검색창 왼쪽을 5번 박스 시작선으로 확장 */
-/* ⭐ 5번 박스 왼쪽 선 기준 정렬 */
-body .nav-search {
-  display: flex !important;
-  align-items: center;
-  position: absolute !important;
-  top: 116px !important; 
+  /* 4. ⭐ 검색창 정렬 핵심 수정 ⭐ */
+  body .nav-search {
+    display: flex !important;
+    align-items: center;
+    position: absolute !important;
+    top: 116px !important; 
 
-  /* [왼쪽 기준점] 부모패딩(15px) + 1열너비(33.33%) + 간격(10px) 
-     이 값이 정확히 5번 박스의 왼쪽 시작선입니다. */
-  left: calc(15px + 33.33% + 10px) !important; 
+    /* [오른쪽 고정 해제] */
+    right: 15px !important; /* 오른쪽 끝은 6번 박스와 맞춤 */
+    
+    /* [왼쪽 시작점] 
+       부모패딩(15px) + 1번째 열 너비(33.33%) + 간격(약 4~5px)
+       5번 박스의 왼쪽 선에 정확히 맞춥니다. */
+    left: calc(15px + 33.33% + 5px) !important; 
 
-  /* [너비 설정] 2개 박스 분량의 너비에서 간격 등을 고려한 수치 */
-  /* 만약 오른쪽 끝을 6번 박스에 맞추고 싶다면 아래 width 대신 right: 15px를 쓰세요. */
-  right: 15px !important; 
-  
-  width: auto !important; /* right: 15px와 조합되어 자동으로 늘어남 */
-  height: 48px !important;
-  background: #ffffff !important;
-  border: 1.5px solid var(--brand, #2563eb) !important;
-  border-radius: 8px !important;
-  padding: 0 12px !important;
-  z-index: 1000 !important;
-}
+    width: auto !important; 
+    height: 48px !important;
+    background: #ffffff !important;
+    border: 1.5px solid var(--brand, #2563eb) !important;
+    border-radius: 8px !important;
+    padding: 0 12px !important;
+    z-index: 1000 !important;
+    box-shadow: none !important;
+  }
 
   /* 검색창 내부 입력 필드 */
   body .nav-search input[type="search"] {
@@ -1686,7 +1681,7 @@ body .nav-search {
     background: transparent !important;
   }
 
-  /* 5. 기타 섹션 반응형 조절 */
+  /* 5. 기타 섹션 반응형 */
   body .main-banner { 
     height: 160px !important; 
     margin: 15px !important; 
